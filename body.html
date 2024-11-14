@@ -1,0 +1,177 @@
+
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Quiz Time</title>
+         <link rel="stylesheet" href="body.css">
+     </head>
+     <body>
+         <div class="container mt-5">
+             <h3 class="text-center mb-4">Its Quiz Time Bravo!!🥴</h3>
+             <div id="question" class="mb-4"></div>
+             <div class="timer-container">
+                 <div class="timer">
+                     <div class="time" id="time">15</div>
+                 </div>
+             </div>
+             <button class="btn btn-primary" onClick="nextQuestion()" id="nextButton">Next</button>
+             <br/>
+             <h4 class="mt-3">Score : <small id="score_value"></small></h4>
+         </div>
+        
+     </body>
+     </html>
+     
+
+<script>
+
+
+const questions = [
+    {
+        question: "How many Ballon d'Or does Cristiano Ronaldo have?",
+        options: ["10", "6", "0", "5"],
+        answer: "5"
+    },
+    {
+        question: "What is the shape of a football?",
+        options: ["Spherical", "Circular", "Oval", "Rectangular"],
+        answer: "Circular"
+    },
+    {
+        question: "Who is considered the GOAT of soccer?",
+        options: ["Messi", "Ronaldo", "Ozil", "Beckham"],
+        answer: "Ronaldo"
+    },
+    {
+        question: "Who won the previous Ballon d'Or?",
+        options: ["Cristiano Ronaldo", "Messut Ozil", "Zlatan Ibrahimovic", "Rodrigo Hernández Cascante"],
+        answer: "Rodrigo Hernández Cascante"
+    },
+    {
+        question: " How many goals did Frank Lampard have for Chelsea in the 2010-11 season?",
+        options: ["6 Goals", "13 Goals", "19 Goals", "6 Goals"],
+        answer: "13 Goals"
+    },
+   
+    {
+        question: "What year did Chelsea FC reach the 100-year milestone?",
+        options: ["1988", "2000", "2010", "2005"],
+        answer: "2005"
+    },
+    {
+        question: "What was the last year of Bobby Charlton's professional playing career?",
+        options: ["1979", "1985", "1969", "1976"],
+        answer: "1976"
+    },
+    {
+        question: "Who was named was named UEFA Club Defender of the Year in 2005, 2008, and 2009?",
+        options: ["Des Walker", "Alan Hansen", "Paul McGrath", "John Terry"],
+        answer: "John Terry"
+    },
+    {
+        question: "How many soccer balls are usually used in a regular game of soccer in the premier league?",
+        options: ["12", "10", "5", "2"],
+        answer: "10"
+    },
+    {
+        question: "Soccer was invented in which country?",
+        options: ["Britain", "Nepal", "England", "Pakistan"],
+        answer: "Britain"
+    },
+    {
+        question: "When a player receives the ball while being “beyond” the second last opponent is called",
+        options: ["Offside", "inside", "Outof side", "Foul"],
+        answer: "Offside"
+    },
+    {
+        question: " How many goalies are on the field at one time during game play?",
+        options: ["2", "3", "4", "8"],
+        answer: "2"
+    },
+    {
+        question: "In what kind of space is soccer played?",
+        options: ["", "", "", ""],
+        options: ["Yard", "Field", "court", "Board"],
+        answer: "Field"
+    },
+    {
+        question: "A goal keeper (only the goal keeper) can always use his feet and what during game play?",
+        options: ["Nose","foot","Hands","Ankle"],
+        answer: "Hands"
+    },
+];
+
+const questionDiv = document.getElementById("question");
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let countdown;
+
+function loadQuestion() {
+    clearTimeout(timer); 
+    clearInterval(countdown); 
+    document.getElementById("score_value").innerHTML = score;
+    questionDiv.innerHTML = `<h4>${questions[currentQuestion].question}</h4>`;
+    questions[currentQuestion].options.forEach((option, index) => {
+        questionDiv.innerHTML += `<div class="form-check" onclick="selectOption(${index})">
+            <input class="form-check-input" type="radio" name="option" value="${option}">
+            <label class="form-check-label">${option}</label>
+        </div>`;
+    });
+
+   
+    timer = setTimeout(() => {
+        nextQuestion();
+    }, 15000);
+
+    
+    let timeLeft = 15;
+    document.getElementById('time').innerHTML = timeLeft;
+    countdown = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time').innerHTML = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+        }
+    }, 1000);
+}
+
+function selectOption(index) {
+    const options = document.querySelectorAll('.form-check');
+    options.forEach(option => {
+        option.classList.remove('selected');
+    });
+    options[index].classList.add('selected');
+    options[index].querySelector('input').checked = true;
+}
+
+function nextQuestion() {
+    const options = document.querySelectorAll('input[type="radio"]');
+    let selectedOption;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].checked) {
+            selectedOption = options[i].value;
+        }
+    }
+
+    if (selectedOption === questions[currentQuestion].answer) {
+        score++;
+    }
+
+    currentQuestion++;
+    if (currentQuestion >= questions.length) {
+        questionDiv.innerHTML = `<h4>It's Over</h4>`;
+        document.getElementById("nextButton").style.display = "none";
+    } else {
+        loadQuestion();
+    }
+}
+
+loadQuestion();
+
+</script>
+</html>
+
+
