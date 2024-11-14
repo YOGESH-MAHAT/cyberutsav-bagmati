@@ -1,10 +1,11 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="supd1.css">
-<script src="./body.js"></script>
+    <link rel="stylesheet" href="body.css">
+
 </head>
 <body>
     
@@ -18,4 +19,95 @@
     <h4>Score : <small id="score_value"></small> </h4>
 
 </body>
+
+<script>
+    const questions = [
+        {
+            question:"How many balandor does cristiano ronaldo have?",
+            options:["10","6","0","5"],
+            answer:"5"
+        },
+
+        {
+            question:"What is the shape of football?",
+            options:["sperical","circular","oval","rectangular"],
+            answer:"circular"
+        },
+
+        {
+            question:"who s the goat of soccer?",
+            options:["messi","ronaldo","ozil","beckham"],
+            answer:"ronaldo"
+        },
+
+        {
+            question:"who won the previous balandor ?",
+            options:["Cristiano Ronaldo","Messut Ozil","zaltan ibramovic","vinicius junior"],
+            answer:"harry kane"
+        },
+        {
+            question:"How many balandor does cristiano ronaldo have?",
+            options:["10","6","0","5"],
+            answer:"5"
+        },
+        {
+            question:"How many balandor does cristiano ronaldo have?",
+            options:["10","6","0","5"],
+            answer:"5"
+        },
+    ];
+
+
+    const questionDiv = document.getElementById("question");
+    let currentQuestion = 0;
+
+
+    let score = 0;
+    function loadQuestion(){
+        document.getElementById("score_value").innerHTML = score;
+        questionDiv.innerHTML =`<h3>${questions[currentQuestion].question}</h3>`;
+        questions[currentQuestion].options.forEach((option)=>{
+            questionDiv.innerHTML+=`<input type="radio" value="${option}" name="option"/> ${option}`;
+        })
+    }
+
+    loadQuestion();
+
+    function nextQuestion(){
+
+
+     const options =   document.querySelectorAll('input[type="radio"]')
+     console.log(options);
+     
+     let selectedOption;
+     for(let i=0;i<options.length;i++){
+        if(options[i].checked){
+            selectedOption = options[i].value;
+        }
+     }
+     
+     if(selectedOption=== questions[currentQuestion].answer){
+        score++;
+     }
+
+     currentQuestion++;
+     if(currentQuestion > questions.length-1){
+        questionDiv.innerHTML = `ITS OVER`;
+        document.getElementById("nextButton").style.display="none";
+     }else 
+     loadQuestion();
+
+    }
+
+
+ 
+</script>
 </html>
+
+
+<!-- 
+
+Local Storage.
+Animations.
+CSS Frameworks (Tailwind , Bootstrap)
+-->
