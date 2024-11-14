@@ -73,32 +73,7 @@
 
     loadQuestion();
 
-    function nextQuestion(){
-
-
-     const options =   document.querySelectorAll('input[type="radio"]')
-     console.log(options);
-     
-     let selectedOption;
-     for(let i=0;i<options.length;i++){
-        if(options[i].checked){
-            selectedOption = options[i].value;
-        }
-     }
-     
-     if(selectedOption=== questions[currentQuestion].answer){
-        score++;
-     }
-
-     currentQuestion++;
-     if(currentQuestion > questions.length-1){
-        questionDiv.innerHTML = `ITS OVER`;
-        document.getElementById("nextButton").style.display="none";
-     }else 
-     loadQuestion();
-
-    }
-
+  
 
  
 </script>
